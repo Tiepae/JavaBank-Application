@@ -23,6 +23,10 @@ public class JavaBank {
         System.out.println("============================");
 
 
+        // Boolean for comparisons
+        boolean isMatch = true;
+
+
         // Input stream
         Scanner input = new Scanner(System.in);
 
@@ -31,7 +35,7 @@ public class JavaBank {
         String username;
         String password;
 
-        do{
+        do {
             System.out.println("1. Create Account");
             System.out.println("2. Login");
             System.out.println("3. Exit");
@@ -39,26 +43,26 @@ public class JavaBank {
             choice = input.nextInt();
 
 
-            if(choice == 1){
+            if (choice == 1) {
                 // Prompt for a username (no spaces allowed; reject and re-prompt if spaces are entered)
                 System.out.println("Create username: ");
                 username = input.next();
-                if(username.contains(" ")){
+                if (username.contains(" ")) {
                     System.out.println("no spaces allowed");
                     continue;
                 }
                 // Check that the username does not already exist (loop through usernames[] with equals())
                 // If the username is taken, display "Username already exists. Please choose another." and re-prompt
-                for (int i = 0; i < accountCount;i++){
-                   if(username.equals(usernames[i])){
-                       System.out.print("Username already exists. Please choose another.");
-                       continue;
-                   }
+                for (int i = 0; i < accountCount; i++) {
+                    if (username.equals(usernames[i])) {
+                        System.out.print("Username already exists. Please choose another.");
+                        continue;
+                    }
                 }
                 // Prompt for a password (minimum 6 characters; reject and re-prompt if too short)
                 System.out.print("Create password: ");
                 password = input.next();
-                if(password.length() < 6){
+                if (password.length() < 6) {
                     System.out.println("minimum 6 characters");
                     continue;
                 }
@@ -66,16 +70,86 @@ public class JavaBank {
                 usernames[accountCount] = username;
                 passwords[accountCount] = password;
                 checkingBal[accountCount] = 0.00;
+                isActive[accountCount] = true;
                 // Increment accountCount
                 accountCount++;
                 // Display "Account created successfully! Welcome, [username]."
                 System.out.print("Account created successfully! Welcome, " + username);
                 System.out.println();
             }
+            // LOGIN PORTION
+            // Prompt user for username and password
+            if (choice == 2) {
+                System.out.print("Enter username: ");
+                username = input.next();
+                System.out.print("Enter password: ");
+                password = input.next();
+
+                // Login storage
+                int loggedInIndex = -1;
 
 
-        }while(choice != 3);
-        System.out.println("Exited Program");
+                for (int i = 0; i < accountCount; i++) {
+                    if (username.equals(usernames[i]) && password.equals(passwords[i]) && (isActive[i] == true)) {
+                        // FINISH THIS SECTION
+                        // if credentials are correct, store the logged-in index and display the main menu
+                        loggedInIndex = i;
+                        break;
+                    }
+                }
+                // Display menu
+                System.out.println("============================");
+                System.out.println("\tHello, " + username);
+                System.out.println("============================");
+                // Switch Statement
+                if (loggedInIndex == -1) {
+                    System.out.println("Invalid username or password.");
+                    break;
+                }
+
+                int menu = 0;
+                do {
+
+                    System.out.println("1. View Balances");
+                    System.out.println("2. Deposit");
+                    System.out.println("3. Withdraw");
+                    System.out.println("4. Transfer (Checking + saving)");
+                    System.out.println("5. Transaction History + Bonus");
+                    System.out.println("6. Logout");
+                    System.out.print("Enter Choice: ");
+
+                    //input variable
+                    menu = input.nextInt();
+
+                    switch (menu) {
+                        case 1:
+
+                        case 2:
+
+                        case 3:
+
+                        case 4:
+
+                        case 5:
+
+                        case 6:
+                            loggedInIndex = -1;
+                            System.out.println("Logged out!");
+                            break;
+
+                    }
+                } while (menu != 6);
+                // Use isActive[i] == true to prevent login to a closed account
+
+                if (choice == 3) {
+                    System.out.println("Exited Program");
+                    break;
+                }
+
+
+            }
+        }while (choice != 3);
+            System.out.println("You have been logged out. Goodbye!");
 
         }
 
