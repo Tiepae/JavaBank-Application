@@ -132,6 +132,7 @@ public class JavaBank {
                             System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
                             System.out.println();
                             break;
+                            // DOUBLE CHECK CASE 2 & 3 ************
                         case 2:
                             // Double check this section
                             System.out.println("1. checking \t 2. Savings");
@@ -145,6 +146,8 @@ public class JavaBank {
                                     checkingBal[accountCount] += amount;
                                     System.out.printf("Checking: $%.2f", checkingBal[accountCount]);
                                     System.out.println();
+                                }else{
+                                    System.out.println("You didn't enter a number");
                                 }
                             } if (menu == 2) {
                                 System.out.print("Deposited Amount: ");
@@ -155,10 +158,40 @@ public class JavaBank {
                                     savingsBal[accountCount] += amount;
                                     System.out.printf("Savings: $%.2f", savingsBal[accountCount]);
                                     System.out.println();
+                            }else{
+                                System.out.println("You didn't enter a number");
                             }
                         }
+                            break;
                         case 3:
-
+                            System.out.println("1. checking \t 2. Savings");
+                            menu = input.nextInt();
+                            if (menu == 1){
+                                System.out.print("Withdraw Amount: ");
+                                amount = input.nextDouble();
+                                if (amount <= 0){
+                                    System.out.println("Withdraw amount must be greater than zero.");
+                                }if (amount > 0){
+                                    checkingBal[accountCount] -= amount;
+                                    System.out.printf("Checking: $%.2f", checkingBal[accountCount]);
+                                    System.out.println();
+                                } else{
+                                    System.out.println("You didn't enter a number");
+                                }
+                            }if (menu == 2){
+                                System.out.print("Withdraw Amount: ");
+                                amount = input.nextDouble();
+                                if (amount <= 0){
+                                System.out.println("Withdraw amount must be greater than zero.");
+                                }  if (amount > 0) {
+                                    savingsBal[accountCount] -= amount;
+                                    System.out.printf("Savings: $%.2f", savingsBal[accountCount]);
+                                    System.out.println();
+                                }else{
+                                    System.out.println("You didn't enter a number");
+                            }
+                            }
+                            break;
                         case 4:
 
                         case 5:
