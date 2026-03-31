@@ -1,4 +1,5 @@
 //import java.util.Arrays;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -108,6 +109,7 @@ public class JavaBank {
                 }
 
                 int menu = 0;
+
                 do {
 
                     System.out.println("1. View Balances");
@@ -120,12 +122,41 @@ public class JavaBank {
 
                     //input variable
                     menu = input.nextInt();
+                    double amount = 0;
 
                     switch (menu) {
                         case 1:
-
+                            System.out.println("--- Your Balances ---");
+                            System.out.printf("Checking: $ %.2f", checkingBal[accountCount]);
+                            System.out.println();
+                            System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
+                            System.out.println();
+                            break;
                         case 2:
-
+                            // Double check this section
+                            System.out.println("1. checking \t 2. Savings");
+                            menu = input.nextInt();
+                            if (menu == 1){
+                                System.out.print("Deposited Amount: ");
+                                amount = input.nextDouble();
+                                if(amount <= 0){
+                                    System.out.println("Deposit amount must be greater than zero.");
+                                }if(amount > 0){
+                                    checkingBal[accountCount] += amount;
+                                    System.out.printf("Checking: $%.2f", checkingBal[accountCount]);
+                                    System.out.println();
+                                }
+                            } if (menu == 2) {
+                                System.out.print("Deposited Amount: ");
+                                amount = input.nextDouble();
+                                if (amount <= 0){
+                                    System.out.println("Deposit amount must be greater than zero.");
+                                } if(amount > 0){
+                                    savingsBal[accountCount] += amount;
+                                    System.out.printf("Savings: $%.2f", savingsBal[accountCount]);
+                                    System.out.println();
+                            }
+                        }
                         case 3:
 
                         case 4:
