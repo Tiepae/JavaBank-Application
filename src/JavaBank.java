@@ -27,12 +27,11 @@ public class JavaBank {
         // Boolean for comparisons
         boolean isMatch = true;
 
-
         // Input stream
         Scanner input = new Scanner(System.in);
 
         // User choice selection variable
-        int choice;
+        int choice = 0;
         String username;
         String password;
 
@@ -41,6 +40,11 @@ public class JavaBank {
             System.out.println("2. Login");
             System.out.println("3. Exit");
             System.out.print("Enter choice: ");
+            if (!input.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a number.");
+                input.next();
+                continue;
+            }
             choice = input.nextInt();
 
 
@@ -54,11 +58,16 @@ public class JavaBank {
                 }
                 // Check that the username does not already exist (loop through usernames[] with equals())
                 // If the username is taken, display "Username already exists. Please choose another." and re-prompt
+                boolean exists = false;
                 for (int i = 0; i < accountCount; i++) {
                     if (username.equals(usernames[i])) {
-                        System.out.print("Username already exists. Please choose another.");
-                        continue;
+                        exists = true;
+                        break;
                     }
+                }
+                if (exists) {
+                    System.out.println("Username already exists. Please choose another.");
+                    continue;
                 }
                 // Prompt for a password (minimum 6 characters; reject and re-prompt if too short)
                 System.out.print("Create password: ");
@@ -85,6 +94,7 @@ public class JavaBank {
                 username = input.next();
                 System.out.print("Enter password: ");
                 password = input.next();
+
 
                 // Login storage
                 int loggedInIndex = -1;
@@ -119,6 +129,11 @@ public class JavaBank {
                     System.out.println("5. Transaction History <- Bonus");
                     System.out.println("6. Logout");
                     System.out.print("Enter Choice: ");
+                    if (!input.hasNextInt()) {
+                        System.out.println("Invalid input. Please enter a number.");
+                        input.next();
+                        continue;
+                    }
 
                     //input variable
                     menu = input.nextInt();
@@ -132,73 +147,119 @@ public class JavaBank {
                             System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
                             System.out.println();
                             break;
-                            // DOUBLE CHECK CASE 2 & 3 for character input crashing bug ************
+                        // DOUBLE CHECK CASE 2 & 3 for character input crashing bug ************
                         case 2:
                             // Double check this section
                             System.out.println("1. checking \t 2. Savings");
+                            if (!input.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a number.");
+                                input.next();
+                                continue;
+                            }
                             menu = input.nextInt();
-                            if (menu == 1){
+                            if (menu == 1) {
                                 System.out.print("Deposited Amount: ");
+                                if (!input.hasNextDouble()) {
+                                    System.out.println("Invalid input. Please enter a number.");
+                                    input.next();
+                                    continue;
+                                }
                                 amount = input.nextDouble();
-                                if(amount <= 0){
+                                if (amount <= 0) {
                                     System.out.println("Deposit amount must be greater than zero.");
-                                }if(amount > 0){
+                                }
+                                if (amount > 0) {
                                     checkingBal[accountCount] += amount;
                                     System.out.printf("Checking: $%.2f", checkingBal[accountCount]);
                                     System.out.println();
-                                }else{
+                                } else {
                                     System.out.println("You didn't enter a number");
                                 }
-                            } if (menu == 2) {
+                            }
+                            if (menu == 2) {
                                 System.out.print("Deposited Amount: ");
+                                if (!input.hasNextDouble()) {
+                                    System.out.println("Invalid input. Please enter a number.");
+                                    input.next();
+                                    continue;
+                                }
                                 amount = input.nextDouble();
-                                if (amount <= 0){
+                                if (amount <= 0) {
                                     System.out.println("Deposit amount must be greater than zero.");
-                                } if(amount > 0){
+                                }
+                                if (amount > 0) {
                                     savingsBal[accountCount] += amount;
                                     System.out.printf("Savings: $%.2f", savingsBal[accountCount]);
                                     System.out.println();
-                            }else{
-                                System.out.println("You didn't enter a number");
+                                } else {
+                                    System.out.println("You didn't enter a number");
+                                }
                             }
-                        }
                             break;
                         case 3:
                             System.out.println("1. checking \t 2. Savings");
+                            if (!input.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a number.");
+                                input.next();
+                                continue;
+                            }
                             menu = input.nextInt();
-                            if (menu == 1){
+                            if (menu == 1) {
                                 System.out.print("Withdraw Amount: ");
+                                if (!input.hasNextDouble()) {
+                                    System.out.println("Invalid input. Please enter a number.");
+                                    input.next();
+                                    continue;
+                                }
                                 amount = input.nextDouble();
-                                if (amount <= 0){
+                                if (amount <= 0) {
                                     System.out.println("Withdraw amount must be greater than zero.");
-                                }if (amount > 0){
+                                }
+                                if (amount > 0) {
                                     checkingBal[accountCount] -= amount;
                                     System.out.printf("Checking: $%.2f", checkingBal[accountCount]);
                                     System.out.println();
-                                } else{
+                                } else {
                                     System.out.println("You didn't enter a number");
                                 }
-                            }if (menu == 2){
+                            }
+                            if (menu == 2) {
                                 System.out.print("Withdraw Amount: ");
+                                if (!input.hasNextDouble()) {
+                                    System.out.println("Invalid input. Please enter a number.");
+                                    input.next();
+                                    continue;
+                                }
                                 amount = input.nextDouble();
-                                if (amount <= 0){
-                                System.out.println("Withdraw amount must be greater than zero.");
-                                }  if (amount > 0) {
+                                if (amount <= 0) {
+                                    System.out.println("Withdraw amount must be greater than zero.");
+                                }
+                                if (amount > 0) {
                                     savingsBal[accountCount] -= amount;
                                     System.out.printf("Savings: $%.2f", savingsBal[accountCount]);
                                     System.out.println();
-                                }else{
+                                } else {
                                     System.out.println("You didn't enter a number");
-                            }
+                                }
                             }
                             break;
                         case 4:
                             System.out.println("1. Checking -> Savings 2. Savings -> Checking");
+                            if (!input.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a number.");
+                                input.next();
+                                continue;
+                            }
                             menu = input.nextInt();
                             if (menu == 1) {
                                 System.out.println("Transfer amount to Savings: ");
+                                if (!input.hasNextDouble()) {
+                                    System.out.println("Invalid input. Please enter a number.");
+                                    input.next();
+                                    continue;
+                                }
                                 amount = input.nextDouble();
-                                if(amount > 0 && checkingBal[accountCount] > 0){
+                                if (amount > 0 && checkingBal[accountCount] > 0) {
                                     savingsBal[accountCount] += amount;
                                     checkingBal[accountCount] -= amount;
 
@@ -207,13 +268,19 @@ public class JavaBank {
                                     System.out.println();
                                     System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
                                     System.out.println();
-                                }else{
+                                } else {
                                     System.out.println("Invalid amount! No money to transfer.");
                                 }
-                            }if (menu == 2){
+                            }
+                            if (menu == 2) {
                                 System.out.println("Transfer amount to Checking: ");
+                                if (!input.hasNextDouble()) {
+                                    System.out.println("Invalid input. Please enter a number.");
+                                    input.next();
+                                    continue;
+                                }
                                 amount = input.nextDouble();
-                                if(amount > 0 && savingsBal[accountCount] > 0){
+                                if (amount > 0 && savingsBal[accountCount] > 0) {
                                     checkingBal[accountCount] += amount;
                                     savingsBal[accountCount] -= amount;
                                     System.out.println("--- Your Balances ---");
@@ -221,7 +288,7 @@ public class JavaBank {
                                     System.out.println();
                                     System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
                                     System.out.println();
-                                }else{
+                                } else {
                                     System.out.println("Invalid amount! No money to transfer.");
                                 }
                             }
@@ -236,13 +303,12 @@ public class JavaBank {
                     }
                 } while (menu != 6);
                 // Use isActive[i] == true to prevent login to a closed account
+                
 
-                if (choice == 3) {
-                    System.out.println("Exited Program");
-                    break;
-                }
-
-
+            }
+            if (choice == 3) {
+                System.out.println("Exited Program");
+                break;
             }
         }while (choice != 3);
             System.out.println("You have been logged out. Goodbye!");
