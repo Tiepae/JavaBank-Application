@@ -115,8 +115,8 @@ public class JavaBank {
                     System.out.println("1. View Balances");
                     System.out.println("2. Deposit");
                     System.out.println("3. Withdraw");
-                    System.out.println("4. Transfer (Checking + saving)");
-                    System.out.println("5. Transaction History + Bonus");
+                    System.out.println("4. Transfer (Checking <-> saving)");
+                    System.out.println("5. Transaction History <- Bonus");
                     System.out.println("6. Logout");
                     System.out.print("Enter Choice: ");
 
@@ -132,7 +132,7 @@ public class JavaBank {
                             System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
                             System.out.println();
                             break;
-                            // DOUBLE CHECK CASE 2 & 3 ************
+                            // DOUBLE CHECK CASE 2 & 3 for character input crashing bug ************
                         case 2:
                             // Double check this section
                             System.out.println("1. checking \t 2. Savings");
@@ -193,7 +193,39 @@ public class JavaBank {
                             }
                             break;
                         case 4:
+                            System.out.println("1. Checking -> Savings 2. Savings -> Checking");
+                            menu = input.nextInt();
+                            if (menu == 1) {
+                                System.out.println("Transfer amount to Savings: ");
+                                amount = input.nextDouble();
+                                if(amount > 0 && checkingBal[accountCount] > 0){
+                                    savingsBal[accountCount] += amount;
+                                    checkingBal[accountCount] -= amount;
 
+                                    System.out.println("--- Your Balances ---");
+                                    System.out.printf("Checking: $ %.2f", checkingBal[accountCount]);
+                                    System.out.println();
+                                    System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
+                                    System.out.println();
+                                }else{
+                                    System.out.println("Invalid amount! No money to transfer.");
+                                }
+                            }if (menu == 2){
+                                System.out.println("Transfer amount to Checking: ");
+                                amount = input.nextDouble();
+                                if(amount > 0 && savingsBal[accountCount] > 0){
+                                    checkingBal[accountCount] += amount;
+                                    savingsBal[accountCount] -= amount;
+                                    System.out.println("--- Your Balances ---");
+                                    System.out.printf("Checking: $ %.2f", checkingBal[accountCount]);
+                                    System.out.println();
+                                    System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
+                                    System.out.println();
+                                }else{
+                                    System.out.println("Invalid amount! No money to transfer.");
+                                }
+                            }
+                            break;
                         case 5:
 
                         case 6:
