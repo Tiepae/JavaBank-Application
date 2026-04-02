@@ -1,5 +1,4 @@
-//import java.util.Arrays;
-import java.util.Arrays;
+
 import java.util.Scanner;
 
 import static java.lang.System.exit;
@@ -35,29 +34,30 @@ public class JavaBank {
         String username;
         String password;
 
+
         do {
             System.out.println("1. Create Account");
             System.out.println("2. Login");
             System.out.println("3. Exit");
             System.out.print("Enter choice: ");
             if (!input.hasNextInt()) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println("Invalid option. Please try again.");
                 input.next();
                 continue;
             }
             choice = input.nextInt();
-
+            input.nextLine();
 
             if (choice == 1) {
-                // Prompt for a username (no spaces allowed; reject and re-prompt if spaces are entered)
-                System.out.println("Create username: ");
-                username = input.next();
-                if (username.contains(" ")) {
+                // Prompts for a username
+                System.out.print("Create username: ");
+                username = input.nextLine().toLowerCase();
+
+                if (username.contains(" ") || !username.equals(username.trim())) {
                     System.out.println("no spaces allowed");
                     continue;
                 }
-                // Check that the username does not already exist (loop through usernames[] with equals())
-                // If the username is taken, display "Username already exists. Please choose another." and re-prompt
+                // Checks that the username does not already exist
                 boolean exists = false;
                 for (int i = 0; i < accountCount; i++) {
                     if (username.equals(usernames[i])) {
@@ -69,29 +69,29 @@ public class JavaBank {
                     System.out.println("Username already exists. Please choose another.");
                     continue;
                 }
-                // Prompt for a password (minimum 6 characters; reject and re-prompt if too short)
+                // Prompts for a password
                 System.out.print("Create password: ");
                 password = input.next();
                 if (password.length() < 6) {
                     System.out.println("minimum 6 characters");
                     continue;
                 }
-                // Store the username, password, and initial balances of $0.00 in the next available array slot
+                // Stores the username, password, and initial balances of $0.00
                 usernames[accountCount] = username;
                 passwords[accountCount] = password;
                 checkingBal[accountCount] = 0.00;
                 isActive[accountCount] = true;
                 // Increment accountCount
                 accountCount++;
-                // Display "Account created successfully! Welcome, [username]."
+                // Displays if account was created successfully.
                 System.out.print("Account created successfully! Welcome, " + username);
                 System.out.println();
             }
             // LOGIN PORTION
-            // Prompt user for username and password
+            // Prompts user for username and password
             if (choice == 2) {
                 System.out.print("Enter username: ");
-                username = input.next();
+                username = input.next().toLowerCase().trim();
                 System.out.print("Enter password: ");
                 password = input.next();
 
@@ -112,7 +112,7 @@ public class JavaBank {
                 System.out.println("============================");
                 System.out.println("\tHello, " + username);
                 System.out.println("============================");
-                // Switch Statement
+
                 if (loggedInIndex == -1) {
                     System.out.println("Invalid username or password.");
                     break;
@@ -126,11 +126,11 @@ public class JavaBank {
                     System.out.println("2. Deposit");
                     System.out.println("3. Withdraw");
                     System.out.println("4. Transfer (Checking <-> saving)");
-                    System.out.println("5. Transaction History <- Bonus");
+                    System.out.println("5. Transaction History <- Bonus (NOT IMPLEMENTED YET)");
                     System.out.println("6. Logout");
                     System.out.print("Enter Choice: ");
                     if (!input.hasNextInt()) {
-                        System.out.println("Invalid input. Please enter a number.");
+                        System.out.println("Invalid option. Please try again.");
                         input.next();
                         continue;
                     }
@@ -147,7 +147,6 @@ public class JavaBank {
                             System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
                             System.out.println();
                             break;
-                        // DOUBLE CHECK CASE 2 & 3 for character input crashing bug ************
                         case 2:
                             // Double check this section
                             System.out.println("1. checking \t 2. Savings");
@@ -243,6 +242,7 @@ public class JavaBank {
                                 }
                             }
                             break;
+                            // Transfers money between accounts
                         case 4:
                             System.out.println("1. Checking -> Savings 2. Savings -> Checking");
                             if (!input.hasNextInt()) {
@@ -299,6 +299,8 @@ public class JavaBank {
                             loggedInIndex = -1;
                             System.out.println("Logged out!");
                             break;
+                        default:
+                            System.out.println("Invalid option. Please try again.");
 
                     }
                 } while (menu != 6);
