@@ -1,7 +1,6 @@
 
 import java.util.Scanner;
 
-import static java.lang.System.exit;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -22,9 +21,6 @@ public class JavaBank {
         System.out.println("\tWelcome to JavaBank"); // come back to fix the alignment later
         System.out.println("============================");
 
-
-        // Boolean for comparisons
-        boolean isMatch = true;
 
         // Input stream
         Scanner input = new Scanner(System.in);
@@ -137,9 +133,10 @@ public class JavaBank {
 
                     //input variable
                     menu = input.nextInt();
-                    double amount = 0;
+                    double amount;
 
                     switch (menu) {
+                        // Check Balance option
                         case 1:
                             System.out.println("--- Your Balances ---");
                             System.out.printf("Checking: $ %.2f", checkingBal[accountCount]);
@@ -147,8 +144,8 @@ public class JavaBank {
                             System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
                             System.out.println();
                             break;
+                        // Deposit money option
                         case 2:
-                            // Double check this section
                             System.out.println("1. checking \t 2. Savings");
                             if (!input.hasNextInt()) {
                                 System.out.println("Invalid input. Please enter a number.");
@@ -195,6 +192,7 @@ public class JavaBank {
                                 }
                             }
                             break;
+                        // Withdraw money option
                         case 3:
                             System.out.println("1. checking \t 2. Savings");
                             if (!input.hasNextInt()) {
@@ -242,7 +240,7 @@ public class JavaBank {
                                 }
                             }
                             break;
-                            // Transfers money between accounts
+                        // Transfers money between accounts
                         case 4:
                             System.out.println("1. Checking -> Savings 2. Savings -> Checking");
                             if (!input.hasNextInt()) {
@@ -293,8 +291,9 @@ public class JavaBank {
                                 }
                             }
                             break;
+                        // Bonus option (Not implemented)
                         case 5:
-
+                        // Logout option
                         case 6:
                             loggedInIndex = -1;
                             System.out.println("Logged out!");
@@ -304,8 +303,6 @@ public class JavaBank {
 
                     }
                 } while (menu != 6);
-                // Use isActive[i] == true to prevent login to a closed account
-                
 
             }
             if (choice == 3) {
