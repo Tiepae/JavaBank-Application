@@ -212,6 +212,10 @@ public class JavaBank {
                                     continue;
                                 }
                                 amount = input.nextDouble();
+                                if (amount > checkingBal[accountCount]){
+                                    System.out.println("Amount exceeds account balance!");
+                                    continue;
+                                }
                                 if (amount <= 0) {
                                     System.out.println("Withdraw amount must be greater than zero.");
                                 }
@@ -231,6 +235,10 @@ public class JavaBank {
                                     continue;
                                 }
                                 amount = input.nextDouble();
+                                if (amount > savingsBal[accountCount]){
+                                    System.out.println("Amount exceeds account balance!");
+                                    continue;
+                                }
                                 if (amount <= 0) {
                                     System.out.println("Withdraw amount must be greater than zero.");
                                 }
