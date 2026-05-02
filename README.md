@@ -1,14 +1,20 @@
-All the images below show a step by step process of what occurs when the program is ran and a user account it created.
+## Project Overview
 
-Display of menu:
+This project simulates a basic banking system where users can create an account, log in, and perform transactions such as deposits, withdrawals, and transfers between accounts.
 
-<img width="258" height="188" alt="image" src="https://github.com/user-attachments/assets/5109f238-50b2-44fc-a149-16b399e6ad64" />
+Note: This project does not use file handling or third-party libraries. The objective was to focus on applying core Java fundamentals in a controlled environment.
 
-Display of menu when user enters data successfuly:
+Through this project, I strengthened my understanding of key programming concepts including primitives, arrays, loops, bitwise operators, and regular expressions.
 
-<img width="407" height="242" alt="image" src="https://github.com/user-attachments/assets/79ea8301-08c7-4a6c-b79e-683513e80fa2" />
 
-Display of menu when user enters an already created account username:
+## Features
+- Create a new account
+- User login system
+- Deposit funds
+- Withdraw funds
+- Transferring funds
 
-<img width="376" height="151" alt="image" src="https://github.com/user-attachments/assets/aca53054-cff3-447a-a42e-eacc8226a1bc" />
-
+## Development Environment
+- IntelliJ IDEA 2025.3
+- Java 21
+- OS: Windows 11
