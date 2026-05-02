@@ -35,6 +35,7 @@ public class JavaBank {
             System.out.println("1. Create Account");
             System.out.println("2. Login");
             System.out.println("3. Exit");
+            System.out.println();
             System.out.print("Enter choice: ");
             if (!input.hasNextInt()) {
                 System.out.println("Invalid option. Please try again.");
@@ -126,6 +127,7 @@ public class JavaBank {
                     System.out.println("4. Transfer (Checking <-> saving)");
                     System.out.println("5. Transaction History <- Extra content (Not implemented yet)");
                     System.out.println("6. Logout");
+                    System.out.println();
                     System.out.print("Enter Choice: ");
                     if (!input.hasNextInt()) {
                         System.out.println("Invalid option. Please try again.");
@@ -294,6 +296,10 @@ public class JavaBank {
                                     continue;
                                 }
                                 amount = input.nextDouble();
+                                if (amount > savingsBal[accountCount]){
+                                    System.out.println("Insufficient funds to transfer from account");
+                                    continue;
+                                }
                                 if (amount > 0 && savingsBal[accountCount] > 0) {
                                     checkingBal[accountCount] += amount;
                                     savingsBal[accountCount] -= amount;
