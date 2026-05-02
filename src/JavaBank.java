@@ -80,6 +80,7 @@ public class JavaBank {
                 // Increment accountCount
                 accountCount++;
                 // Displays if account was created successfully.
+                System.out.println();
                 System.out.print("Account created successfully! Welcome, " + username);
                 System.out.println();
             }
@@ -104,6 +105,7 @@ public class JavaBank {
                         break;
                     }
                 }
+                System.out.println();
                 // Display menu
                 System.out.println("============================");
                 System.out.println("\tHello, " + username);
@@ -117,12 +119,12 @@ public class JavaBank {
                 int menu = 0;
 
                 do {
-
+                    System.out.println();
                     System.out.println("1. View Balances");
                     System.out.println("2. Deposit");
                     System.out.println("3. Withdraw");
                     System.out.println("4. Transfer (Checking <-> saving)");
-                    System.out.println("5. Transaction History <- Bonus (NOT IMPLEMENTED YET)");
+                    System.out.println("5. Transaction History <- Extra content (Not implemented yet)");
                     System.out.println("6. Logout");
                     System.out.print("Enter Choice: ");
                     if (!input.hasNextInt()) {
@@ -138,6 +140,7 @@ public class JavaBank {
                     switch (menu) {
                         // Check Balance option
                         case 1:
+                            System.out.println();
                             System.out.println("--- Your Balances ---");
                             System.out.printf("Checking: $ %.2f", checkingBal[accountCount]);
                             System.out.println();
@@ -257,6 +260,10 @@ public class JavaBank {
                                     continue;
                                 }
                                 amount = input.nextDouble();
+                                if (amount > checkingBal[accountCount]){
+                                    System.out.println("Insufficient funds to transfer from account");
+                                    continue;
+                                }
                                 if (amount > 0 && checkingBal[accountCount] > 0) {
                                     savingsBal[accountCount] += amount;
                                     checkingBal[accountCount] -= amount;
@@ -266,7 +273,8 @@ public class JavaBank {
                                     System.out.println();
                                     System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
                                     System.out.println();
-                                } else {
+                                }
+                                else {
                                     System.out.println("Invalid amount! No money to transfer.");
                                 }
                             }
