@@ -1,340 +1,246 @@
-
 import java.util.Scanner;
 
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class JavaBank {
-    public static void main(String[] args) {
 
-        // Parallel Array list
-        String[] usernames = new String[100];
-        String[] passwords = new String[100];
-        double[] checkingBal = new double[100];
-        double[] savingsBal = new double[100];
-        boolean[] isActive = new boolean[100];
-        int accountCount = 0;             // tracks how many accounts exist
+    private static Bank bank = new Bank();
 
-
-        // Header Display
-        System.out.println("============================");
-        System.out.println("\tWelcome to JavaBank"); // come back to fix the alignment later
-        System.out.println("============================");
-
-
-        // Input stream
-        Scanner input = new Scanner(System.in);
-
-        // User choice selection variable
-        int choice = 0;
+    public static String userNameValidation(Scanner input) {
         String username;
-        String password;
-
-
-        do {
-            System.out.println("1. Create Account");
-            System.out.println("2. Login");
-            System.out.println("3. Exit");
-            System.out.println();
-            System.out.print("Enter choice: ");
-            if (!input.hasNextInt()) {
-                System.out.println("Invalid option. Please try again.");
-                input.next();
+        System.out.print("Create username: ");
+        while (true) {
+            username = input.nextLine().toLowerCase();
+            if (username.contains(" ") || !username.equals(username.trim())) {
+                System.out.println("no spaces allowed");
                 continue;
             }
-            choice = input.nextInt();
-            input.nextLine();
-
-            if (choice == 1) {
-                // Prompts for a username
-                System.out.print("Create username: ");
-                username = input.nextLine().toLowerCase();
-
-                if (username.contains(" ") || !username.equals(username.trim())) {
-                    System.out.println("no spaces allowed");
-                    continue;
-                }
-                // Checks that the username does not already exist
-                boolean exists = false;
-                for (int i = 0; i < accountCount; i++) {
-                    if (username.equals(usernames[i])) {
-                        exists = true;
-                        break;
-                    }
-                }
-                if (exists) {
-                    System.out.println("Username already exists. Please choose another.");
-                    continue;
-                }
-                // Prompts for a password
-                System.out.print("Create password: ");
-                password = input.next();
-                if (password.length() < 6) {
-                    System.out.println("minimum 6 characters");
-                    continue;
-                }
-                // Stores the username, password, and initial balances of $0.00
-                usernames[accountCount] = username;
-                passwords[accountCount] = password;
-                checkingBal[accountCount] = 0.00;
-                isActive[accountCount] = true;
-                // Increment accountCount
-                accountCount++;
-                // Displays if account was created successfully.
-                System.out.println();
-                System.out.print("Account created successfully! Welcome, " + username);
-                System.out.println();
+            // Checks that the username does not already exist
+            if (bank.usernameExists(username)) {
+                System.out.println("Username already exists. Please choose another.");
+                continue;
             }
-            // LOGIN PORTION
-            // Prompts user for username and password
-            if (choice == 2) {
-                System.out.print("Enter username: ");
-                username = input.next().toLowerCase().trim();
-                System.out.print("Enter password: ");
-                password = input.next();
-
-
-                // Login storage
-                int loggedInIndex = -1;
-
-
-                for (int i = 0; i < accountCount; i++) {
-                    if (username.equals(usernames[i]) && password.equals(passwords[i]) && (isActive[i] == true)) {
-                        // FINISH THIS SECTION
-                        // if credentials are correct, store the logged-in index and display the main menu
-                        loggedInIndex = i;
-                        break;
-                    }
-                }
-                System.out.println();
-                // Display menu
-                System.out.println("============================");
-                System.out.println("\tHello, " + username);
-                System.out.println("============================");
-
-                if (loggedInIndex == -1) {
-                    System.out.println("Invalid username or password.");
-                    break;
-                }
-
-                int menu = 0;
-
-                do {
-                    System.out.println();
-                    System.out.println("1. View Balances");
-                    System.out.println("2. Deposit");
-                    System.out.println("3. Withdraw");
-                    System.out.println("4. Transfer (Checking <-> saving)");
-                    System.out.println("5. Transaction History <- Extra content (Not implemented yet)");
-                    System.out.println("6. Logout");
-                    System.out.println();
-                    System.out.print("Enter Choice: ");
-                    if (!input.hasNextInt()) {
-                        System.out.println("Invalid option. Please try again.");
-                        input.next();
-                        continue;
-                    }
-
-                    //input variable
-                    menu = input.nextInt();
-                    double amount;
-
-                    switch (menu) {
-                        // Check Balance option
-                        case 1:
-                            System.out.println();
-                            System.out.println("--- Your Balances ---");
-                            System.out.printf("Checking: $ %.2f", checkingBal[accountCount]);
-                            System.out.println();
-                            System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
-                            System.out.println();
-                            break;
-                        // Deposit money option
-                        case 2:
-                            System.out.println("1. checking \t 2. Savings");
-                            if (!input.hasNextInt()) {
-                                System.out.println("Invalid input. Please enter a number.");
-                                input.next();
-                                continue;
-                            }
-                            menu = input.nextInt();
-                            if (menu == 1) {
-                                System.out.print("Deposited Amount: ");
-                                if (!input.hasNextDouble()) {
-                                    System.out.println("Invalid input. Please enter a number.");
-                                    input.next();
-                                    continue;
-                                }
-                                amount = input.nextDouble();
-                                if (amount <= 0) {
-                                    System.out.println("Deposit amount must be greater than zero.");
-                                }
-                                if (amount > 0) {
-                                    checkingBal[accountCount] += amount;
-                                    System.out.printf("Checking: $%.2f", checkingBal[accountCount]);
-                                    System.out.println();
-                                } else {
-                                    System.out.println("You didn't enter a number");
-                                }
-                            }
-                            if (menu == 2) {
-                                System.out.print("Deposited Amount: ");
-                                if (!input.hasNextDouble()) {
-                                    System.out.println("Invalid input. Please enter a number.");
-                                    input.next();
-                                    continue;
-                                }
-                                amount = input.nextDouble();
-                                if (amount <= 0) {
-                                    System.out.println("Deposit amount must be greater than zero.");
-                                }
-                                if (amount > 0) {
-                                    savingsBal[accountCount] += amount;
-                                    System.out.printf("Savings: $%.2f", savingsBal[accountCount]);
-                                    System.out.println();
-                                } else {
-                                    System.out.println("You didn't enter a number");
-                                }
-                            }
-                            break;
-                        // Withdraw money option
-                        case 3:
-                            System.out.println("1. checking \t 2. Savings");
-                            if (!input.hasNextInt()) {
-                                System.out.println("Invalid input. Please enter a number.");
-                                input.next();
-                                continue;
-                            }
-                            menu = input.nextInt();
-                            if (menu == 1) {
-                                System.out.print("Withdraw Amount: ");
-                                if (!input.hasNextDouble()) {
-                                    System.out.println("Invalid input. Please enter a number.");
-                                    input.next();
-                                    continue;
-                                }
-                                amount = input.nextDouble();
-                                if (amount > checkingBal[accountCount]){
-                                    System.out.println("Amount exceeds account balance!");
-                                    continue;
-                                }
-                                if (amount <= 0) {
-                                    System.out.println("Withdraw amount must be greater than zero.");
-                                }
-                                if (amount > 0) {
-                                    checkingBal[accountCount] -= amount;
-                                    System.out.printf("Checking: $%.2f", checkingBal[accountCount]);
-                                    System.out.println();
-                                } else {
-                                    System.out.println("You didn't enter a number");
-                                }
-                            }
-                            if (menu == 2) {
-                                System.out.print("Withdraw Amount: ");
-                                if (!input.hasNextDouble()) {
-                                    System.out.println("Invalid input. Please enter a number.");
-                                    input.next();
-                                    continue;
-                                }
-                                amount = input.nextDouble();
-                                if (amount > savingsBal[accountCount]){
-                                    System.out.println("Amount exceeds account balance!");
-                                    continue;
-                                }
-                                if (amount <= 0) {
-                                    System.out.println("Withdraw amount must be greater than zero.");
-                                }
-                                if (amount > 0) {
-                                    savingsBal[accountCount] -= amount;
-                                    System.out.printf("Savings: $%.2f", savingsBal[accountCount]);
-                                    System.out.println();
-                                } else {
-                                    System.out.println("You didn't enter a number");
-                                }
-                            }
-                            break;
-                        // Transfers money between accounts
-                        case 4:
-                            System.out.println("1. Checking -> Savings 2. Savings -> Checking");
-                            if (!input.hasNextInt()) {
-                                System.out.println("Invalid input. Please enter a number.");
-                                input.next();
-                                continue;
-                            }
-                            menu = input.nextInt();
-                            if (menu == 1) {
-                                System.out.println("Transfer amount to Savings: ");
-                                if (!input.hasNextDouble()) {
-                                    System.out.println("Invalid input. Please enter a number.");
-                                    input.next();
-                                    continue;
-                                }
-                                amount = input.nextDouble();
-                                if (amount > checkingBal[accountCount]){
-                                    System.out.println("Insufficient funds to transfer from account");
-                                    continue;
-                                }
-                                if (amount > 0 && checkingBal[accountCount] > 0) {
-                                    savingsBal[accountCount] += amount;
-                                    checkingBal[accountCount] -= amount;
-
-                                    System.out.println("--- Your Balances ---");
-                                    System.out.printf("Checking: $ %.2f", checkingBal[accountCount]);
-                                    System.out.println();
-                                    System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
-                                    System.out.println();
-                                }
-                                else {
-                                    System.out.println("Invalid amount! No money to transfer.");
-                                }
-                            }
-                            if (menu == 2) {
-                                System.out.println("Transfer amount to Checking: ");
-                                if (!input.hasNextDouble()) {
-                                    System.out.println("Invalid input. Please enter a number.");
-                                    input.next();
-                                    continue;
-                                }
-                                amount = input.nextDouble();
-                                if (amount > savingsBal[accountCount]){
-                                    System.out.println("Insufficient funds to transfer from account");
-                                    continue;
-                                }
-                                if (amount > 0 && savingsBal[accountCount] > 0) {
-                                    checkingBal[accountCount] += amount;
-                                    savingsBal[accountCount] -= amount;
-                                    System.out.println("--- Your Balances ---");
-                                    System.out.printf("Checking: $ %.2f", checkingBal[accountCount]);
-                                    System.out.println();
-                                    System.out.printf("Savings: $ %.2f", savingsBal[accountCount]);
-                                    System.out.println();
-                                } else {
-                                    System.out.println("Invalid amount! No money to transfer.");
-                                }
-                            }
-                            break;
-                        // Bonus option (Not implemented)
-                        case 5:
-                        // Logout option
-                        case 6:
-                            loggedInIndex = -1;
-                            System.out.println("Logged out!");
-                            break;
-                        default:
-                            System.out.println("Invalid option. Please try again.");
-
-                    }
-                } while (menu != 6);
-
-            }
-            if (choice == 3) {
-                System.out.println("Exited Program");
-                break;
-            }
-        }while (choice != 3);
-            System.out.println("You have been logged out. Goodbye!");
-
+            break;
         }
+        return username;
+    }
+
+    public static String passwordValidation(Scanner input) {
+        String password;
+        System.out.print("Create password: ");
+        while (true) {
+            password = input.next();
+            if (password.length() < 6) {
+                System.out.println("minimum 6 characters");
+                continue;
+            }
+            break;
+        }
+        return password;
+
+    }
+
+    public static void createAccount(Scanner input) {
+        // Prompts for a username
+        String username = userNameValidation(input);
+        // Prompts for a password
+        String password = passwordValidation(input);
+
+        bank.addCustomer(username, password);
+        // Displays if account was created successfully.
+        System.out.println();
+        System.out.print("Account created successfully! Welcome, " + username);
+        System.out.println();
 
 
     }
+
+
+        public static void viewBalance(Customer customer) {
+            System.out.println();
+            System.out.println("--- Your Balances ---");
+            System.out.printf("Checking: $ %.2f", customer.getCheckingAccount().getBalance());
+            System.out.println();
+            System.out.printf("Savings: $ %.2f", customer.getSavingsAccount().getBalance());
+            System.out.println();
+        }
+        public static void UserMenu(Scanner input, Customer customer) throws Transactable.InvalidAmountException, Transactable.InsufficientFundsException {
+
+
+            int menu = 0;
+            do {
+                System.out.println();
+                System.out.println("1. View Balances");
+                System.out.println("2. Deposit");
+                System.out.println("3. Withdraw");
+                System.out.println("4. Transfer (Checking <-> saving)");
+                System.out.println("5. Transaction History <- Extra content (Not implemented yet)");
+                System.out.println("6. Logout");
+                System.out.println();
+                System.out.print("Enter Choice: ");
+                if (!input.hasNextInt()) {
+                    System.out.println("Invalid option. Please try again.");
+                    input.next();
+                    continue;
+                }
+
+                //input variable
+                menu = input.nextInt();
+                double amount;
+
+                switch (menu) {
+                    // Check Balance option
+                    case 1:
+                        viewBalance(customer);
+                        break;
+                    case 2:
+                        System.out.println("1. checking \t 2. Savings");
+                        if (!input.hasNextInt()) {
+                            System.out.println("Invalid input. Please enter a number.");
+                            input.next();
+                            continue;
+                        }
+                        menu = input.nextInt();
+                        System.out.print("Deposited Amount: ");
+                        amount = input.nextDouble();
+                        if (menu == 1) {
+                            customer.getCheckingAccount().deposit(amount);
+                        } else if (menu == 2) {
+                            customer.getSavingsAccount().deposit(amount);
+                        } else {
+                            System.out.print("Invalid Choice");
+                        }
+                        break;
+                    case 3:
+                        System.out.println("1. checking \t 2. Savings");
+                        if (!input.hasNextInt()) {
+                            System.out.println("Invalid input. Please enter a number.");
+                            input.next();
+                            continue;
+                        }
+                        menu = input.nextInt();
+                        System.out.print("Withdraw Amount: ");
+                        amount = input.nextDouble();
+                        if (menu == 1) {
+                            customer.getCheckingAccount().withdraw(amount);
+                        } else if (menu == 2) {
+                            customer.getSavingsAccount().withdraw(amount);
+                        } else {
+                            System.out.print("Invalid Choice");
+                        }
+                        break;
+                    case 4:
+                        System.out.println("1. Checking -> Savings 2. Savings -> Checking");
+                        if (!input.hasNextInt()) {
+                            System.out.println("Invalid input. Please enter a number.");
+                            input.next();
+                            continue;
+                        }
+                        menu = input.nextInt();
+                        if (menu == 1) {
+                            System.out.println("Transfer amount to Savings: ");
+                            if (!input.hasNextDouble()) {
+                                System.out.println("Invalid input. Please enter a number.");
+                                input.next();
+                                continue;
+                            }
+                            amount = input.nextDouble();
+                            customer.getCheckingAccount().withdraw(amount);
+                            customer.getSavingsAccount().deposit(amount);
+
+
+                        } else if (menu == 2) {
+                            System.out.println("Transfer amount to Checking: ");
+                            if (!input.hasNextDouble()) {
+                                System.out.println("Invalid input. Please enter a number.");
+                                input.next();
+                                continue;
+                            }
+                            amount = input.nextDouble();
+                            customer.getSavingsAccount().withdraw(amount);
+                            customer.getCheckingAccount().deposit(amount);
+
+                        }
+                        viewBalance(customer);
+                        break;
+                        // Bonus option (Not implemented)
+                    case 5:
+                        // Logout option
+                    case 6:
+                        int loggedInIndex = -1;
+                        System.out.println("Logged out!");
+                        return;
+                    default:
+                        System.out.println("Invalid option. Please try again.");
+                }
+
+
+            } while (true);
+        }
+
+
+        public static void main(String[] args) throws Transactable.InvalidAmountException, Transactable.InsufficientFundsException {
+            // YOU LEFT OFF HERE FIGURE OUT HOW TO ADD METHODS
+
+            // Header Display
+            System.out.println("============================");
+            System.out.println("\tWelcome to JavaBank"); // come back to fix the alignment later
+            System.out.println("============================");
+
+
+            // Input stream
+            Scanner input = new Scanner(System.in);
+
+            // User choice selection variable
+            int choice = 0;
+            String username;
+            String password;
+
+
+            while(true) {
+                System.out.println("1. Create Account");
+                System.out.println("2. Login");
+                System.out.println("3. Exit");
+                System.out.println();
+                System.out.print("Enter choice: ");
+                if (!input.hasNextInt()) {
+                    System.out.println("Invalid option. Please try again.");
+                    input.next();
+                    continue;
+                }
+                choice = input.nextInt();
+                input.nextLine();
+
+                if (choice == 1) {
+                    createAccount(input); //CHANGE THIS TO WORK WITH BANK INSTEAD OF CUSTOMERS.SIZE()
+                }
+                // LOGIN PORTION
+                // Prompts user for username and password
+                if (choice == 2) {
+                    System.out.print("Enter username: ");
+                    username = input.next().toLowerCase().trim();
+                    System.out.print("Enter password: ");
+                    password = input.next();
+                    // Login storage
+                    Customer c = bank.findCustomer(username, password);
+                    if(c == null){
+                        System.out.println("Incorrect username or password!");
+                        continue;
+                    }
+                    // Display menu
+                    System.out.println("============================");
+                    System.out.println("\tHello, " + username);
+                    System.out.println("============================");
+                    UserMenu(input, c);
+                }
+                if (choice == 3) {
+                    System.out.println("Exited Program");
+                    break;
+                }
+            }
+        }
+
+
+        }
+
